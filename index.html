@@ -1241,9 +1241,8 @@
 </footer>
 
 <script>
-  // ── Google Sheets Formular
-  // HIER deine Google Apps Script URL eintragen:
-  const SHEET_URL = 'DEINE_APPS_SCRIPT_URL_HIER';
+  // ── SheetDB Formular (URL nach SheetDB Setup eintragen)
+  const SHEETDB_URL = 'SHEETDB_URL_HIER';
 
   const form = document.getElementById('callbackForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -1257,22 +1256,25 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Wird gesendet…';
 
-      const data = {
-        vorname:   document.getElementById('firstName').value.trim(),
-        nachname:  document.getElementById('lastName').value.trim(),
-        telefon:   document.getElementById('phone').value.trim(),
-        firma:     document.getElementById('company').value.trim(),
-        zeit:      document.getElementById('time').value,
-        datum:     new Date().toLocaleString('de-DE')
+      const payload = {
+        data: [{
+          Datum:       new Date().toLocaleString('de-DE'),
+          Vorname:     document.getElementById('firstName').value.trim(),
+          Nachname:    document.getElementById('lastName').value.trim(),
+          Telefon:     document.getElementById('phone').value.trim(),
+          Firma:       document.getElementById('company').value.trim() || '–',
+          Rückrufzeit: document.getElementById('time').value,
+          Status:      'Neu – Anrufen!'
+        }]
       };
 
       try {
-        await fetch(SHEET_URL, {
+        const res = await fetch(SHEETDB_URL, {
           method: 'POST',
-          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: JSON.stringify(payload)
         });
+        if (!res.ok) throw new Error();
         form.style.display = 'none';
         formSuccess.style.display = 'block';
       } catch (err) {
