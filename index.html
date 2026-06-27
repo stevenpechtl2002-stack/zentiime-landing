@@ -1238,7 +1238,7 @@
 </footer>
 
 <script>
-  const SHEETDB_URL = 'https://stevenpechtl.app.n8n.cloud/webhook/a9d2441b-5968-45ef-b1ce-01f8f2c26559';
+  const SHEETDB_URL = 'https://stevenpechtl.app.n8n.cloud/webhook-test/a9d2441b-5968-45ef-b1ce-01f8f2c26559';
 
   const form = document.getElementById('callbackForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -1262,12 +1262,12 @@
       };
 
       try {
-        const res = await fetch(SHEETDB_URL, {
+        await fetch(SHEETDB_URL, {
           method: 'POST',
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error();
         form.style.display = 'none';
         formSuccess.style.display = 'block';
       } catch (err) {
