@@ -1159,10 +1159,7 @@
             <label for="phone">Telefonnummer</label>
             <input type="tel" id="phone" placeholder="+49 123 456789" required />
           </div>
-          <div class="form-group">
-            <label for="company">Unternehmen (optional)</label>
-            <input type="text" id="company" placeholder="Mustermann GmbH" />
-          </div>
+
           <div class="form-group">
             <label for="time">Bevorzugte Rückrufzeit</label>
             <select id="time">
@@ -1262,7 +1259,7 @@
           Vorname:     document.getElementById('firstName').value.trim(),
           Nachname:    document.getElementById('lastName').value.trim(),
           Telefon:     document.getElementById('phone').value.trim(),
-          Firma:       document.getElementById('company').value.trim() || '–',
+
           Rückrufzeit: document.getElementById('time').value,
           Status:      'Neu – Anrufen!'
         }]
