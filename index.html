@@ -133,6 +133,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-glow {
@@ -142,6 +144,7 @@
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
+      z-index: 0;
       animation: pulse 6s ease-in-out infinite;
     }
     .hero-glow2 {
@@ -150,6 +153,7 @@
       background: radial-gradient(circle, rgba(124,77,255,0.1) 0%, transparent 70%);
       top: 30%; left: 20%;
       pointer-events: none;
+      z-index: 0;
       animation: pulse 8s ease-in-out infinite reverse;
     }
 
@@ -342,24 +346,30 @@
     }
     .ai-bubble strong { color: var(--teal); }
 
-    /* floating badges on hero visual */
+    /* trust pills below hero buttons */
+    .trust-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 28px;
+      animation: fadeUp .9s ease .45s both;
+    }
     .float-badge {
-      position: absolute;
-      background: var(--bg3);
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: .8rem;
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: .78rem;
       font-weight: 600;
       white-space: nowrap;
-      backdrop-filter: blur(10px);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .float-badge.tl { top: -20px; left: -40px; animation: float 4s ease-in-out infinite; }
-    .float-badge.tr { top: -10px; right: -30px; animation: float 4s ease-in-out infinite 1s; }
-    .float-badge.bl { bottom: -20px; left: 20px; animation: float 4s ease-in-out infinite 0.5s; }
-    .float-badge .num { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; color:var(--teal); display:block; }
+    .float-badge .num { font-family:'Syne',sans-serif; font-weight:800; color:var(--teal); }
 
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
     /* ── STATS ── */
     .stats {
@@ -812,7 +822,7 @@
       .usecases-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .stats { grid-template-columns: repeat(2, 1fr); }
-      .float-badge { display: none; }
+      .trust-pills { gap: 8px; }
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       .hero-actions { flex-direction: column; align-items: center; }
@@ -860,20 +870,19 @@
     <a href="#how" class="btn-ghost">Wie es funktioniert →</a>
   </div>
 
-  <div class="hero-visual">
-    <div class="float-badge tl">
-      <span class="num" data-count="98">0</span>%
-      Kundenzufriedenheit
+  <div class="trust-pills">
+    <div class="float-badge">
+      <span class="num">98%</span> Kundenzufriedenheit
     </div>
-    <div class="float-badge tr">
-      <span class="num" data-count="24">0</span>/7
-      Erreichbar
+    <div class="float-badge">
+      <span class="num">24/7</span> Erreichbar
     </div>
-    <div class="float-badge bl">
-      <span class="num" data-count="2">0</span> Min
-      Einrichtung
+    <div class="float-badge">
+      <span class="num">2 Min</span> Einrichtung
     </div>
+  </div>
 
+  <div class="hero-visual">
     <div class="phone-card">
       <div class="call-icon">📞</div>
       <div class="call-info">
