@@ -1238,8 +1238,7 @@
 </footer>
 
 <script>
-  // ── SheetDB Formular (URL nach SheetDB Setup eintragen)
-  const SHEETDB_URL = 'SHEETDB_URL_HIER';
+  const SHEETDB_URL = 'https://stevenpechtl.app.n8n.cloud/webhook/a9d2441b-5968-45ef-b1ce-01f8f2c26559';
 
   const form = document.getElementById('callbackForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -1254,15 +1253,12 @@
       submitBtn.textContent = 'Wird gesendet…';
 
       const payload = {
-        data: [{
-          Datum:       new Date().toLocaleString('de-DE'),
-          Vorname:     document.getElementById('firstName').value.trim(),
-          Nachname:    document.getElementById('lastName').value.trim(),
-          Telefon:     document.getElementById('phone').value.trim(),
-
-          Rückrufzeit: document.getElementById('time').value,
-          Status:      'Neu – Anrufen!'
-        }]
+        datum:        new Date().toLocaleString('de-DE'),
+        vorname:      document.getElementById('firstName').value.trim(),
+        nachname:     document.getElementById('lastName').value.trim(),
+        telefon:      document.getElementById('phone').value.trim(),
+        rueckrufzeit: document.getElementById('time').value,
+        status:       'Neu - Anrufen!'
       };
 
       try {
