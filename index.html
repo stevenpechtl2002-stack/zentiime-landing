@@ -30,7 +30,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
     }
@@ -122,13 +122,13 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 32px 80px;
+      padding: 140px 40px 100px;
       z-index: 1;
       overflow: hidden;
     }
 
     .hero-content {
-      max-width: 640px;
+      max-width: 700px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -191,10 +191,10 @@
     h1 {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(2rem, 3vw, 3.2rem);
-      line-height: 1.1;
+      font-size: 3.5rem;
+      line-height: 1.08;
       letter-spacing: -0.03em;
-      max-width: 580px;
+      max-width: 660px;
       animation: fadeUp .9s ease .1s both;
     }
 
@@ -208,18 +208,18 @@
     }
 
     .hero-sub {
-      margin-top: 20px;
+      margin-top: 24px;
       color: var(--muted);
-      font-size: 1rem;
-      max-width: 480px;
+      font-size: 1.1rem;
+      max-width: 520px;
       line-height: 1.7;
       animation: fadeUp .9s ease .2s both;
     }
 
     .hero-actions {
       display: flex;
-      gap: 12px;
-      margin-top: 32px;
+      gap: 14px;
+      margin-top: 40px;
       flex-wrap: wrap;
       justify-content: center;
       animation: fadeUp .9s ease .3s both;
@@ -228,10 +228,10 @@
     .btn-primary {
       background: var(--teal);
       color: #08080E;
-      padding: 13px 28px;
+      padding: 14px 32px;
       border-radius: 8px;
       font-weight: 700;
-      font-size: .95rem;
+      font-size: 1rem;
       text-decoration: none;
       letter-spacing: -.01em;
       transition: all .25s;
@@ -241,10 +241,10 @@
 
     .btn-ghost {
       color: var(--text);
-      padding: 13px 28px;
+      padding: 14px 32px;
       border-radius: 8px;
       font-weight: 600;
-      font-size: .95rem;
+      font-size: 1rem;
       text-decoration: none;
       border: 1px solid var(--border);
       transition: all .25s;
@@ -255,9 +255,9 @@
     /* ── HERO VISUAL ── */
     .hero-visual {
       position: relative;
-      margin-top: 48px;
+      margin-top: 56px;
       width: 100%;
-      max-width: 560px;
+      max-width: 620px;
       animation: fadeUp 1s ease .4s both;
     }
 
@@ -380,7 +380,7 @@
       background: var(--bg);
     }
     .stats {
-      max-width: 960px;
+      max-width: 1060px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -389,12 +389,12 @@
     }
     .stat-item {
       background: var(--bg);
-      padding: 36px 28px;
+      padding: 44px 32px;
       text-align: center;
     }
     .stat-num {
       font-family: 'Syne', sans-serif;
-      font-size: 2.4rem;
+      font-size: 2.8rem;
       font-weight: 800;
       color: var(--teal);
       letter-spacing: -0.04em;
@@ -402,7 +402,7 @@
     }
     .stat-label {
       color: var(--muted);
-      font-size: .8rem;
+      font-size: .875rem;
       margin-top: 8px;
       font-weight: 500;
     }
@@ -411,9 +411,9 @@
     section { position: relative; z-index: 1; }
 
     .section-inner {
-      max-width: 960px;
+      max-width: 1060px;
       margin: 0 auto;
-      padding: 80px 40px;
+      padding: 90px 60px;
     }
 
     .section-label {
@@ -428,16 +428,16 @@
     h2 {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-      letter-spacing: -0.04em;
-      line-height: 1.1;
+      font-size: 2.25rem;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
     }
 
     .section-desc {
       color: var(--muted);
-      margin-top: 16px;
-      max-width: 540px;
-      font-size: 1.05rem;
+      margin-top: 14px;
+      max-width: 500px;
+      font-size: 1rem;
       line-height: 1.7;
     }
 
@@ -742,7 +742,7 @@
       pointer-events: none;
     }
 
-    .cta-inner h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    .cta-inner h2 { font-size: 2.5rem; }
     .cta-inner p { color: var(--muted); margin: 20px auto 40px; max-width: 480px; font-size: 1.05rem; }
 
     /* ── FOOTER ── */
@@ -754,7 +754,7 @@
     }
 
     .footer-inner {
-      max-width: 960px;
+      max-width: 1060px;
       margin: 0 auto;
       padding: 60px 40px 40px;
     }
