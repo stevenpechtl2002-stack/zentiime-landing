@@ -48,11 +48,27 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
     .logo img {
       height: 36px;
       width: auto;
       display: block;
       filter: brightness(0) invert(1);
+    }
+    .logo-ai {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #0C0C14;
+      background: var(--teal);
+      padding: 2px 7px;
+      border-radius: 4px;
+      line-height: 1.4;
     }
 
     .nav-links {
@@ -662,7 +678,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo"><img src="zentime-logo-BDY8gUsm.png" alt="Zentiime" /></a>
+  <a href="#" class="logo"><img src="zentime-logo-BDY8gUsm.png" alt="Zentiime" /><span class="logo-ai">AI</span></a>
   <ul class="nav-links">
     <li><a href="#features">Funktionen</a></li>
     <li><a href="#how">So funktioniert's</a></li>
@@ -991,7 +1007,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="#" class="logo"><img src="zentime-logo-BDY8gUsm.png" alt="Zentiime" /></a>
+        <a href="#" class="logo"><img src="zentime-logo-BDY8gUsm.png" alt="Zentiime" /><span class="logo-ai">AI</span></a>
         <p class="footer-brand-desc">Der KI-Telefonassistent, der nie schläft. Für Unternehmen, die keinen Anruf verpassen wollen.</p>
       </div>
       <div class="footer-col">
