@@ -127,6 +127,14 @@
       overflow: hidden;
     }
 
+    .hero-content {
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .hero-glow {
       position: absolute;
       width: 700px; height: 700px;
@@ -245,7 +253,7 @@
       position: relative;
       margin-top: 80px;
       width: 100%;
-      max-width: 900px;
+      max-width: 680px;
       animation: fadeUp 1s ease .4s both;
     }
 
@@ -253,12 +261,13 @@
       background: var(--bg3);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 32px;
+      padding: 28px 32px;
       display: flex;
-      align-items: center;
-      gap: 24px;
+      align-items: flex-start;
+      gap: 20px;
       box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,232,204,0.05);
       text-align: left;
+      flex-wrap: nowrap;
     }
 
     .call-icon {
@@ -299,6 +308,7 @@
       align-items: center;
       gap: 3px;
       height: 40px;
+      flex-shrink: 0;
     }
     .waveform span {
       display: block;
@@ -831,6 +841,7 @@
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
 
+  <div class="hero-content">
   <div class="badge">KI-Telefonassistent · Nächste Generation</div>
 
   <h1>
@@ -881,6 +892,7 @@
       </div>
     </div>
   </div>
+  </div><!-- end hero-content -->
 </section>
 
 <!-- STATS -->
