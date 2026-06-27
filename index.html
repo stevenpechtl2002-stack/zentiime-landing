@@ -372,15 +372,20 @@
 
 
     /* ── STATS ── */
-    .stats {
+    .stats-wrap {
       position: relative;
       z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .stats {
+      max-width: 1160px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1px;
       background: var(--border);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
     }
     .stat-item {
       background: var(--bg);
@@ -814,6 +819,8 @@
       .testimonials-grid { grid-template-columns: 1fr 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+      nav { padding: 18px 30px; }
+      nav ul { display: none; }
     }
 
     @media (max-width: 700px) {
@@ -905,22 +912,24 @@
 </section>
 
 <!-- STATS -->
-<div class="stats">
-  <div class="stat-item">
-    <div class="stat-num"><span data-count="10000">0</span>+</div>
-    <div class="stat-label">Anrufe täglich bearbeitet</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num"><span data-count="97">0</span>%</div>
-    <div class="stat-label">Erstlösungsrate</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num"><span data-count="3">0</span>s</div>
-    <div class="stat-label">Ø Reaktionszeit</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">-<span data-count="60">0</span>%</div>
-    <div class="stat-label">Kosten im Vergleich zur Hotline</div>
+<div class="stats-wrap">
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num"><span data-count="10000">0</span>+</div>
+      <div class="stat-label">Anrufe täglich bearbeitet</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span data-count="97">0</span>%</div>
+      <div class="stat-label">Erstlösungsrate</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span data-count="3">0</span>s</div>
+      <div class="stat-label">Ø Reaktionszeit</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">-<span data-count="60">0</span>%</div>
+      <div class="stat-label">Kosten im Vergleich zur Hotline</div>
+    </div>
   </div>
 </div>
 
