@@ -472,25 +472,29 @@
       margin-bottom: 20px;
     }
     .transcript-cues {
+      position: relative;
+      min-height: 80px;
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      align-items: center;
     }
     .tcue {
-      font-size: 0.92rem;
-      line-height: 1.65;
-      color: rgba(238,237,245,0.2);
-      padding: 10px 0 10px 16px;
-      border-left: 2px solid transparent;
-      transition: color .35s ease, border-color .35s ease;
-      cursor: default;
-    }
-    .tcue.active {
+      display: none;
+      font-size: 1.05rem;
+      line-height: 1.7;
       color: var(--text);
-      border-left-color: var(--teal);
+      padding-left: 18px;
+      border-left: 3px solid var(--teal);
+      animation: fadeInCue .35s ease;
     }
-    .tcue.done {
-      color: rgba(238,237,245,0.35);
+    .tcue.active { display: block; }
+    @keyframes fadeInCue {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tcue-idle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
     }
 
     @media (max-width: 768px) {
@@ -1505,6 +1509,7 @@
       <div class="voice-transcript" id="voiceTranscript">
         <div class="transcript-label">● Live Transkript</div>
         <div class="transcript-cues" id="transcriptCues">
+          <div class="tcue tcue-idle active" id="tcueIdle">▶ Play drücken um Kira zu hören…</div>
           <div class="tcue" data-index="0">Hallo, ich bin Kira — dein KI-Telefonassistent von ZenTime.</div>
           <div class="tcue" data-index="1">Ab morgen nehme ich jeden Anruf für dich entgegen. Egal zu welcher Uhrzeit, egal welche Sprache dein Kunde spricht.</div>
           <div class="tcue" data-index="2">In Restaurants buche, ändere und storniere ich Tischreservierungen, beantworte Fragen und nehme Essensbestellungen direkt entgegen.</div>
@@ -1807,12 +1812,14 @@
       vBars.classList.toggle('playing', playing);
     }
 
+    const idleEl = document.getElementById('tcueIdle');
+
     function updateCues(t) {
+      idleEl.classList.remove('active');
       cueEls.forEach((el, i) => {
         const c = cues[i];
-        el.classList.remove('active', 'done');
+        el.classList.remove('active');
         if (t >= c.start && t < c.end) el.classList.add('active');
-        else if (t >= c.end)           el.classList.add('done');
       });
     }
 
@@ -1832,7 +1839,8 @@
       setPlaying(false);
       fill.style.width = '0%';
       current.textContent = '0:00';
-      cueEls.forEach(el => { el.classList.remove('active'); el.classList.add('done'); });
+      cueEls.forEach(el => el.classList.remove('active'));
+      idleEl.classList.add('active');
     });
 
     playBtn.addEventListener('click', () => {
