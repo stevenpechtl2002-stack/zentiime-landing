@@ -1083,29 +1083,48 @@
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      nav { padding: 0 32px; }
-      .container { padding: 0 32px; }
+      nav { padding: 0 24px; }
+      .container { padding: 0 24px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .use-grid { grid-template-columns: 1fr 1fr; }
       .testi-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     }
     @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero h1 { font-size: 2.6rem; }
+      nav { padding: 0 16px; }
+      .container { padding: 0 16px; }
+      .nav-cta { display: none; }
+      .hero { padding: 96px 0 48px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+      .hero h1 { font-size: 2.3rem; }
+      .hero p { font-size: 1rem; }
       .hero-btns { flex-direction: column; align-items: flex-start; }
+      .hero-btns a { width: 100%; text-align: center; }
+      .section { padding: 56px 0; }
+      .section-title { font-size: 1.75rem; }
       .how-grid { grid-template-columns: 1fr; }
       .chat-box { display: none; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat:nth-child(even) { border-right: none; }
+      .stat { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .stat:nth-child(2n) { border-right: none; }
+      .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
       .features-grid { grid-template-columns: 1fr; }
       .use-grid { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
       .price-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; }
+      .cta-section h2 { font-size: 1.7rem; }
+      .trust-row { gap: 8px; }
+      .hero-video-wrap { max-height: 70vh; }
+      .hero-video-wrap video { object-fit: cover; height: 100%; }
+    }
+    @media (max-width: 420px) {
+      .hero h1 { font-size: 1.95rem; }
+      .hero-badge { font-size: 0.68rem; padding: 4px 10px; }
+      .trust-pill { font-size: 0.75rem; }
     }
 
     /* HERO VIDEO IN-PLACE */
@@ -1181,6 +1200,63 @@
       transition: color .2s, border-color .2s;
     }
     .hv-skip:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform .25s, opacity .25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      z-index: 98;
+      background: rgba(12,12,20,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px 24px;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      display: block;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--text); }
+    .mobile-menu .mm-cta {
+      margin-top: 16px;
+      background: var(--teal);
+      color: #0C0C14;
+      text-align: center;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      border-bottom: none;
+    }
+    .mobile-menu .mm-cta:hover { opacity: 0.88; }
   </style>
 </head>
 <body>
@@ -1194,8 +1270,20 @@
     <li><a href="#pricing">Preise</a></li>
     <li><a href="#contact">Kontakt</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Demo anfragen</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="#contact" class="nav-cta">Demo anfragen</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" class="mobile-link">Funktionen</a>
+  <a href="#how" class="mobile-link">So funktioniert's</a>
+  <a href="#pricing" class="mobile-link">Preise</a>
+  <a href="#contact" class="mobile-link">Kontakt</a>
+  <a href="#contact" class="mm-cta">Demo anfragen</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1647,7 +1735,8 @@
     </div>
     <div class="calendly-inline-widget reveal"
       data-url="https://calendly.com/stevenpechtl2002/30min?background_color=111120&text_color=EEEDF5&primary_color=00D4B1"
-      style="min-width:320px;height:1000px;margin-top:48px;border-radius:16px;overflow:hidden;">
+      style="min-width:320px;height:1000px;margin-top:48px;border-radius:16px;overflow:hidden;"
+    id="calendlyWidget">
     </div>
   </div>
 </section>
@@ -1859,6 +1948,42 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // HAMBURGER MENU
+  (function() {
+    const btn  = document.getElementById('navHamburger');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+      }
+    });
+  })();
+
+  // CALENDLY MOBILE HEIGHT
+  (function() {
+    const w = document.getElementById('calendlyWidget');
+    if (!w) return;
+    function setH() { w.style.height = window.innerWidth <= 768 ? '700px' : '1000px'; }
+    setH();
+    window.addEventListener('resize', setH);
+  })();
 
   // Count up
   const countObs = new IntersectionObserver(entries => {
