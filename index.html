@@ -314,38 +314,77 @@
       padding: 8px 12px;
     }
 
-    /* AUDIO PREVIEW */
-    .audio-preview {
-      margin: 28px 0 24px;
-    }
-    .audio-preview-label {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 10px;
-    }
-    .audio-dot {
-      width: 7px; height: 7px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: pulse-dot 1.8s ease-in-out infinite;
-    }
-    .audio-player {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    /* VOICE SECTION */
+    .voice-section { background: var(--bg); }
+    .voice-card {
+      margin-top: 48px;
       background: var(--bg3);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 18px;
+      border-radius: 20px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
     }
-    .audio-play-btn {
-      width: 38px; height: 38px;
+    .voice-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .voice-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .voice-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 32px;
+    }
+    .voice-bars span {
+      display: block;
+      width: 3px;
+      background: #0C0C14;
+      border-radius: 2px;
+      height: 8px;
+      transition: height .1s;
+    }
+    .voice-bars.playing span { animation: voiceWave 0.8s ease-in-out infinite; }
+    .voice-bars.playing span:nth-child(1)  { animation-delay: 0s;    height: 8px;  }
+    .voice-bars.playing span:nth-child(2)  { animation-delay: .08s;  height: 20px; }
+    .voice-bars.playing span:nth-child(3)  { animation-delay: .16s;  height: 14px; }
+    .voice-bars.playing span:nth-child(4)  { animation-delay: .24s;  height: 28px; }
+    .voice-bars.playing span:nth-child(5)  { animation-delay: .32s;  height: 10px; }
+    .voice-bars.playing span:nth-child(6)  { animation-delay: .40s;  height: 22px; }
+    .voice-bars.playing span:nth-child(7)  { animation-delay: .48s;  height: 16px; }
+    .voice-bars.playing span:nth-child(8)  { animation-delay: .56s;  height: 26px; }
+    .voice-bars.playing span:nth-child(9)  { animation-delay: .64s;  height: 12px; }
+    .voice-bars.playing span:nth-child(10) { animation-delay: .72s;  height: 20px; }
+    .voice-bars.playing span:nth-child(11) { animation-delay: .08s;  height: 18px; }
+    .voice-bars.playing span:nth-child(12) { animation-delay: .20s;  height: 24px; }
+    .voice-bars.playing span:nth-child(13) { animation-delay: .36s;  height: 10px; }
+    .voice-bars.playing span:nth-child(14) { animation-delay: .52s;  height: 28px; }
+    .voice-bars.playing span:nth-child(15) { animation-delay: .68s;  height: 14px; }
+    @keyframes voiceWave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.25); }
+    }
+    .voice-name { font-size: 1rem; font-weight: 700; }
+    .voice-role { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+    .voice-player {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .voice-play-btn {
+      width: 52px; height: 52px;
       border-radius: 50%;
       border: none;
       background: var(--teal);
@@ -354,32 +393,62 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-left: 2px;
+      padding-left: 3px;
       flex-shrink: 0;
-      transition: opacity .2s;
+      transition: transform .2s, opacity .2s;
+      box-shadow: 0 0 0 0 rgba(0,212,177,0.4);
     }
-    .audio-play-btn:hover { opacity: 0.85; }
-    .audio-track { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-    .audio-progress-bar {
-      width: 100%;
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 4px;
-      cursor: pointer;
+    .voice-play-btn:hover { transform: scale(1.06); }
+    .voice-play-btn.playing { animation: pulseRing 1.5s ease-out infinite; }
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(0,212,177,0.4); }
+      70%  { box-shadow: 0 0 0 14px rgba(0,212,177,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,212,177,0); }
+    }
+    .voice-track { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .voice-waveform {
       position: relative;
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
-    .audio-fill {
+    .voice-waveform-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      width: 100%;
       height: 100%;
+    }
+    .voice-waveform-bars i {
+      display: block;
+      flex: 1;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.12);
+      transition: background .2s;
+    }
+    .voice-waveform-bars i:nth-child(odd)  { height: 60%; }
+    .voice-waveform-bars i:nth-child(3n)   { height: 100%; }
+    .voice-waveform-bars i:nth-child(4n)   { height: 40%; }
+    .voice-waveform-bars i:nth-child(7n)   { height: 80%; }
+    .voice-waveform-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
       width: 0%;
-      background: var(--teal);
+      background: linear-gradient(90deg, rgba(0,212,177,0.5), rgba(108,99,255,0.3));
       border-radius: 4px;
+      pointer-events: none;
       transition: width .1s linear;
     }
-    .audio-times {
+    .voice-times {
       display: flex;
       justify-content: space-between;
       font-size: 0.72rem;
       color: var(--muted);
+      font-weight: 500;
+    }
+    @media (max-width: 768px) {
+      .voice-card { flex-direction: column; align-items: flex-start; gap: 28px; padding: 28px 24px; }
     }
 
     /* TRUST PILLS */
@@ -1096,31 +1165,6 @@
           <a href="#how" class="btn-outline">Wie es funktioniert →</a>
         </div>
 
-        <!-- KI AUDIO PREVIEW -->
-        <div class="audio-preview">
-          <div class="audio-preview-label">
-            <span class="audio-dot"></span>
-            KI-Stimme vorhören
-          </div>
-          <div class="audio-player">
-            <button class="audio-play-btn" id="audioPlayBtn" aria-label="Abspielen">
-              <svg id="audioIcon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
-            </button>
-            <div class="audio-track">
-              <div class="audio-progress-bar" id="audioProgressBar">
-                <div class="audio-fill" id="audioFill"></div>
-              </div>
-              <div class="audio-times">
-                <span id="audioCurrent">0:00</span>
-                <span id="audioDuration">–:––</span>
-              </div>
-            </div>
-            <audio id="heroAudio" preload="metadata">
-              <source src="ElevenLabs_2026-06-29T17_17_42_Laura - Upbeat &amp; Energetic _pvc_sp115_s73_sb32_se45_b_m2.mp3" type="audio/mpeg">
-            </audio>
-          </div>
-        </div>
-
         <div class="trust-row">
           <div class="trust-pill"><b>98%</b> Erfolgsrate</div>
           <div class="trust-pill"><b>24/7</b> Erreichbar</div>
@@ -1357,6 +1401,55 @@
     <div class="use-cta reveal">
       <p>Ihre Branche ist nicht dabei?<br><span>Kein Problem – Zentime funktioniert für jeden Betrieb.</span></p>
       <a href="#contact" class="btn-primary">Termin vereinbaren →</a>
+    </div>
+  </div>
+</section>
+
+<!-- KI VOICE SECTION -->
+<section class="section voice-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag">KI-Stimme</div>
+      <h2 class="section-title">Hör selbst wie natürlich<br>Zentime klingt.</h2>
+      <p class="section-sub">Unsere KI spricht fließend Deutsch — ununterscheidbar von einem echten Mitarbeiter.</p>
+    </div>
+    <div class="voice-card reveal">
+      <div class="voice-left">
+        <div class="voice-avatar">
+          <div class="voice-bars" id="voiceBars">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="voice-info">
+          <div class="voice-name">Laura · Zentime KI</div>
+          <div class="voice-role">Ihr KI-Telefonassistent</div>
+        </div>
+      </div>
+      <div class="voice-player">
+        <audio id="heroAudio" preload="metadata">
+          <source src="ElevenLabs_2026-06-29T17_17_42_Laura - Upbeat &amp; Energetic _pvc_sp115_s73_sb32_se45_b_m2.mp3" type="audio/mpeg">
+        </audio>
+        <button class="voice-play-btn" id="audioPlayBtn" aria-label="Abspielen">
+          <svg id="audioIcon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><polygon points="6,3 20,12 6,21"/></svg>
+        </button>
+        <div class="voice-track">
+          <div class="voice-waveform" id="audioProgressBar">
+            <div class="voice-waveform-fill" id="audioFill"></div>
+            <div class="voice-waveform-bars">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <div class="voice-times">
+            <span id="audioCurrent">0:00</span>
+            <span id="audioDuration">–:––</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1621,13 +1714,20 @@
     const bar      = document.getElementById('audioProgressBar');
     const current  = document.getElementById('audioCurrent');
     const duration = document.getElementById('audioDuration');
+    const vBars    = document.getElementById('voiceBars');
 
-    const playIcon = '<polygon points="6,3 20,12 6,21"/>';
+    const playIcon  = '<polygon points="6,3 20,12 6,21"/>';
     const pauseIcon = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
 
     function fmt(s) {
       const m = Math.floor(s / 60);
       return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    }
+
+    function setPlaying(playing) {
+      icon.innerHTML = playing ? pauseIcon : playIcon;
+      playBtn.classList.toggle('playing', playing);
+      vBars.classList.toggle('playing', playing);
     }
 
     audio.addEventListener('loadedmetadata', () => {
@@ -1641,25 +1741,19 @@
     });
 
     audio.addEventListener('ended', () => {
-      icon.innerHTML = playIcon;
+      setPlaying(false);
       fill.style.width = '0%';
       current.textContent = '0:00';
     });
 
     playBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        icon.innerHTML = pauseIcon;
-      } else {
-        audio.pause();
-        icon.innerHTML = playIcon;
-      }
+      if (audio.paused) { audio.play(); setPlaying(true); }
+      else              { audio.pause(); setPlaying(false); }
     });
 
     bar.addEventListener('click', e => {
       const rect = bar.getBoundingClientRect();
-      const ratio = (e.clientX - rect.left) / rect.width;
-      audio.currentTime = ratio * audio.duration;
+      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
     });
   })();
 
