@@ -314,6 +314,74 @@
       padding: 8px 12px;
     }
 
+    /* AUDIO PREVIEW */
+    .audio-preview {
+      margin: 28px 0 24px;
+    }
+    .audio-preview-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+    .audio-dot {
+      width: 7px; height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .audio-play-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: var(--teal);
+      color: #0C0C14;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 2px;
+      flex-shrink: 0;
+      transition: opacity .2s;
+    }
+    .audio-play-btn:hover { opacity: 0.85; }
+    .audio-track { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .audio-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+    .audio-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      border-radius: 4px;
+      transition: width .1s linear;
+    }
+    .audio-times {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
     /* TRUST PILLS */
     .trust-row {
       display: flex;
@@ -1028,6 +1096,31 @@
           <a href="#how" class="btn-outline">Wie es funktioniert →</a>
         </div>
 
+        <!-- KI AUDIO PREVIEW -->
+        <div class="audio-preview">
+          <div class="audio-preview-label">
+            <span class="audio-dot"></span>
+            KI-Stimme vorhören
+          </div>
+          <div class="audio-player">
+            <button class="audio-play-btn" id="audioPlayBtn" aria-label="Abspielen">
+              <svg id="audioIcon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+            </button>
+            <div class="audio-track">
+              <div class="audio-progress-bar" id="audioProgressBar">
+                <div class="audio-fill" id="audioFill"></div>
+              </div>
+              <div class="audio-times">
+                <span id="audioCurrent">0:00</span>
+                <span id="audioDuration">–:––</span>
+              </div>
+            </div>
+            <audio id="heroAudio" preload="metadata">
+              <source src="ElevenLabs_2026-06-29T17_17_42_Laura - Upbeat &amp; Energetic _pvc_sp115_s73_sb32_se45_b_m2.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+        </div>
+
         <div class="trust-row">
           <div class="trust-pill"><b>98%</b> Erfolgsrate</div>
           <div class="trust-pill"><b>24/7</b> Erreichbar</div>
@@ -1517,6 +1610,57 @@
 
     // Skip button
     skipBtn.addEventListener('click', unlock);
+  })();
+
+  // AUDIO PLAYER
+  (function() {
+    const audio    = document.getElementById('heroAudio');
+    const playBtn  = document.getElementById('audioPlayBtn');
+    const icon     = document.getElementById('audioIcon');
+    const fill     = document.getElementById('audioFill');
+    const bar      = document.getElementById('audioProgressBar');
+    const current  = document.getElementById('audioCurrent');
+    const duration = document.getElementById('audioDuration');
+
+    const playIcon = '<polygon points="6,3 20,12 6,21"/>';
+    const pauseIcon = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+
+    function fmt(s) {
+      const m = Math.floor(s / 60);
+      return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    }
+
+    audio.addEventListener('loadedmetadata', () => {
+      duration.textContent = fmt(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      current.textContent = fmt(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      icon.innerHTML = playIcon;
+      fill.style.width = '0%';
+      current.textContent = '0:00';
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        icon.innerHTML = pauseIcon;
+      } else {
+        audio.pause();
+        icon.innerHTML = playIcon;
+      }
+    });
+
+    bar.addEventListener('click', e => {
+      const rect = bar.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = ratio * audio.duration;
+    });
   })();
 
   // Scroll reveal
