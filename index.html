@@ -560,31 +560,73 @@
     .use-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
     .use-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
-    /* TESTIMONIALS */
-    .testi-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+    /* USE CASE */
+    .usecase-card {
       margin-top: 48px;
-    }
-    .testi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
       background: var(--bg3);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 48px;
     }
-    .stars { color: var(--teal); font-size: 0.875rem; letter-spacing: 2px; margin-bottom: 12px; }
-    .testi-text { font-size: 0.875rem; color: var(--text); line-height: 1.65; font-style: italic; }
-    .testi-author { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
-    .t-av {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--teal), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; font-weight: 700; color: #0C0C14;
+    .usecase-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
     }
-    .t-name { font-size: 0.85rem; font-weight: 600; }
-    .t-role { font-size: 0.75rem; color: var(--muted); }
+    .usecase-left h3 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .usecase-left p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .usecase-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .usecase-stat {
+      padding: 24px 0;
+      text-align: center;
+    }
+    .usecase-stat.highlight .usecase-num { color: var(--teal); }
+    .usecase-divider { height: 1px; background: var(--border); }
+    .usecase-num {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .usecase-num span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-left: 4px;
+      letter-spacing: 0;
+    }
+    .usecase-lbl {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .usecase-card { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+      .usecase-stats { flex-direction: row; justify-content: space-around; }
+      .usecase-divider { width: 1px; height: auto; }
+    }
 
     /* PRICING */
     .price-grid {
@@ -1226,36 +1268,34 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- USE CASE -->
 <section class="section alt">
   <div class="container">
-    <div class="reveal">
-      <div class="section-tag">Kundenstimmen</div>
-      <h2 class="section-title">Was unsere Kunden sagen.</h2>
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag">Use Case</div>
+      <h2 class="section-title">Echte Ergebnisse.<br>Echte Betriebe.</h2>
     </div>
-    <div class="testi-grid">
-      <div class="testi reveal">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">„Seit wir Zentime nutzen, verpassen wir keinen Anruf mehr. Die KI klingt so natürlich, dass Kunden keinen Unterschied merken."</div>
-        <div class="testi-author">
-          <div class="t-av">MK</div>
-          <div><div class="t-name">Maria Kaufmann</div><div class="t-role">Inhaberin, Zahnarztpraxis Kaufmann</div></div>
-        </div>
+    <div class="usecase-card reveal">
+      <div class="usecase-left">
+        <div class="usecase-tag">Nagelstudio · 10+ Mitarbeiter</div>
+        <h3>30+ zusätzliche Termine<br>bereits in der ersten Woche.</h3>
+        <p>Unsere Kundin betreibt ein Nagelstudio mit über 10 Mitarbeitern und empfängt durchschnittlich 50 Kunden täglich. Nach der Einführung von Zentime AI wurden in der ersten Woche täglich über 30 zusätzliche Termine gebucht — vollautomatisch, rund um die Uhr.</p>
+        <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:28px;">Auch für Ihr Business →</a>
       </div>
-      <div class="testi reveal">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">„Wir sparen täglich 4 Stunden ein. Die Terminbuchungsrate stieg um 40%. ROI bereits in der ersten Woche erreicht."</div>
-        <div class="testi-author">
-          <div class="t-av">TS</div>
-          <div><div class="t-name">Thomas Schneider</div><div class="t-role">Geschäftsführer, Immobilien Schneider</div></div>
+      <div class="usecase-stats">
+        <div class="usecase-stat">
+          <div class="usecase-num">50</div>
+          <div class="usecase-lbl">Kunden täglich<br>vor Zentime</div>
         </div>
-      </div>
-      <div class="testi reveal">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">„Die DSGVO-Konformität war für uns entscheidend. Zentime hat uns überzeugt – Top-Technologie aus Deutschland."</div>
-        <div class="testi-author">
-          <div class="t-av">AW</div>
-          <div><div class="t-name">Andrea Weber</div><div class="t-role">Partner, Weber & Partner Rechtsanwälte</div></div>
+        <div class="usecase-divider"></div>
+        <div class="usecase-stat highlight">
+          <div class="usecase-num">+30<span>täglich</span></div>
+          <div class="usecase-lbl">Zusätzliche Termine<br>in Woche 1</div>
+        </div>
+        <div class="usecase-divider"></div>
+        <div class="usecase-stat">
+          <div class="usecase-num">24/7</div>
+          <div class="usecase-lbl">Buchungen<br>automatisch</div>
         </div>
       </div>
     </div>
