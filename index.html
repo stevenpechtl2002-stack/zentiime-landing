@@ -1456,18 +1456,6 @@
   </div>
 </section>
 
-<!-- TIMESTAMP CALIBRATOR (temp, remove after calibration) -->
-<div id="calibrator" style="position:fixed;bottom:24px;right:24px;z-index:9000;background:#16162A;border:1px solid rgba(0,212,177,0.4);border-radius:12px;padding:20px 24px;max-width:340px;font-family:Inter,sans-serif;color:#EEEDF5;font-size:0.85rem;display:none;">
-  <div style="font-weight:700;color:#00D4B1;margin-bottom:12px;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">⏱ Timestamp Kalibrierung</div>
-  <div id="calSentence" style="font-size:0.82rem;color:#aaa;margin-bottom:14px;line-height:1.5;min-height:48px;"></div>
-  <div style="display:flex;gap:8px;align-items:center;">
-    <button id="calMark" style="background:#00D4B1;color:#0C0C14;border:none;padding:8px 18px;border-radius:7px;font-weight:700;cursor:pointer;font-family:inherit;">Jetzt ✓</button>
-    <span id="calInfo" style="color:#888;font-size:0.75rem;"></span>
-  </div>
-  <div id="calResults" style="margin-top:12px;font-size:0.72rem;color:#555;max-height:80px;overflow-y:auto;"></div>
-</div>
-<button id="calToggle" style="position:fixed;bottom:24px;right:24px;z-index:9001;background:#16162A;border:1px solid rgba(0,212,177,0.3);color:#00D4B1;padding:8px 14px;border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;">⏱ Kalibrieren</button>
-
 <!-- KI VOICE SECTION -->
 <section class="section voice-section">
   <div class="container">
@@ -1799,15 +1787,14 @@
     const vBars    = document.getElementById('voiceBars');
     const cueEls   = document.querySelectorAll('.tcue');
 
-    // Estimated timestamps (start in seconds)
     const cues = [
-      { start: 0,    end: 5.5  },  // Hallo, ich bin Kira…
-      { start: 5.5,  end: 13.5 },  // Ab morgen nehme ich…
-      { start: 13.5, end: 21.0 },  // In Restaurants…
-      { start: 21.0, end: 31.0 },  // In Salons, Kosmetikstudios…
-      { start: 31.0, end: 37.5 },  // Ich arbeite Tag und Nacht…
-      { start: 37.5, end: 43.0 },  // Und das zu einem Bruchteil…
-      { start: 43.0, end: 57.0 },  // Wenn du sehen möchtest…
+      { start: 0.9,  end: 4.9  },
+      { start: 4.9,  end: 11.5 },
+      { start: 11.5, end: 19.3 },
+      { start: 19.3, end: 28.1 },
+      { start: 28.1, end: 34.2 },
+      { start: 34.2, end: 37.5 },
+      { start: 37.5, end: 99.0 },
     ];
 
     const playIcon  = '<polygon points="6,3 20,12 6,21"/>';
@@ -1863,52 +1850,6 @@
     bar.addEventListener('click', e => {
       const rect = bar.getBoundingClientRect();
       audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-    });
-  })();
-
-  // TIMESTAMP CALIBRATOR
-  (function() {
-    const sentences = [
-      "Hallo, ich bin Kira — dein KI-Telefonassistent von ZenTime.",
-      "Ab morgen nehme ich jeden Anruf für dich entgegen…",
-      "In Restaurants buche, ändere und storniere ich…",
-      "In Salons, Kosmetikstudios und vielen weiteren Branchen…",
-      "Ich arbeite Tag und Nacht für dich…",
-      "Und das zu einem Bruchteil der Kosten…",
-      "Wenn du sehen möchtest wie ich für dein Business klingen würde…"
-    ];
-    let step = 0, timestamps = [];
-    const toggle = document.getElementById('calToggle');
-    const panel  = document.getElementById('calibrator');
-    const sent   = document.getElementById('calSentence');
-    const mark   = document.getElementById('calMark');
-    const info   = document.getElementById('calInfo');
-    const res    = document.getElementById('calResults');
-    const audio  = document.getElementById('heroAudio');
-
-    toggle.addEventListener('click', () => {
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-      toggle.style.display = 'none';
-      step = 0; timestamps = [];
-      sent.textContent = '▶ Starte das Audio, dann klicke "Jetzt" sobald du "' + sentences[0].substring(0,30) + '..." hörst.';
-      info.textContent = 'Satz 1 von ' + sentences.length;
-      res.textContent = '';
-    });
-
-    mark.addEventListener('click', () => {
-      const t = audio ? Math.round(audio.currentTime * 10) / 10 : 0;
-      timestamps.push(t);
-      res.textContent += 'S' + step + ': ' + t + 's  ';
-      step++;
-      if (step < sentences.length) {
-        sent.textContent = 'Klicke wenn du hörst: "' + sentences[step].substring(0,40) + '..."';
-        info.textContent = 'Satz ' + (step+1) + ' von ' + sentences.length;
-      } else {
-        sent.textContent = '✓ Fertig! Kopiere die Timestamps und schick sie mir.';
-        mark.disabled = true;
-        info.textContent = '';
-        res.style.color = '#00D4B1';
-      }
     });
   })();
 
