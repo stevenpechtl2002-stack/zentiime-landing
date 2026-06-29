@@ -1097,7 +1097,8 @@
       .container { padding: 0 16px; }
       .nav-cta { display: none; }
       .hero { padding: 96px 0 48px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 32px; direction: rtl; }
+      .hero-inner > * { direction: ltr; }
       .hero h1 { font-size: 2.3rem; }
       .hero p { font-size: 1rem; }
       .hero-btns { flex-direction: column; align-items: flex-start; }
@@ -1808,9 +1809,10 @@
     const popupSkip  = document.getElementById('popupSkip');
     const popupWatch = document.getElementById('popupWatch');
 
-    let gateActive = true;
+    const isMobile = window.innerWidth <= 768;
+    let gateActive = !isMobile;
 
-    document.body.style.overflow = 'hidden';
+    if (!isMobile) document.body.style.overflow = 'hidden';
 
     function unlock() {
       gateActive = false;
@@ -1863,6 +1865,9 @@
 
     // Skip button
     skipBtn.addEventListener('click', unlock);
+
+    // On mobile: hide skip button, gate already disabled
+    if (isMobile) skipBtn.style.display = 'none';
   })();
 
   // AUDIO PLAYER + TRANSCRIPT
