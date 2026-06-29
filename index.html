@@ -1895,7 +1895,7 @@
     const current  = document.getElementById('audioCurrent');
     const durEl    = document.getElementById('audioDuration');
     const vBars    = document.getElementById('voiceBars');
-    const cueEls   = document.querySelectorAll('.tcue');
+    const cueEls   = document.querySelectorAll('.tcue[data-index]');
 
     const cues = [
       { start: 0.9,  end: 4.9  },
@@ -1953,8 +1953,14 @@
     });
 
     playBtn.addEventListener('click', () => {
-      if (audio.paused) { audio.play(); setPlaying(true); }
-      else              { audio.pause(); setPlaying(false); }
+      if (audio.paused) {
+        audio.play();
+        setPlaying(true);
+        idleEl.classList.remove('active');
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
     });
 
     bar.addEventListener('click', e => {
