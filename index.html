@@ -1728,8 +1728,8 @@
       popup.style.display = 'flex';
     }
 
-    // Intercept the two hero buttons
-    document.querySelectorAll('.hero-btns a').forEach(btn => {
+    // Intercept hero buttons + nav links
+    document.querySelectorAll('.hero-btns a, .nav-links a, .nav-cta').forEach(btn => {
       btn.addEventListener('click', e => {
         if (gateActive) { e.preventDefault(); showPopup(); }
       });
