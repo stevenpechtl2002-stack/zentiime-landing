@@ -1097,8 +1097,8 @@
       .container { padding: 0 16px; }
       .nav-cta { display: none; }
       .hero { padding: 96px 0 48px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 32px; direction: rtl; }
-      .hero-inner > * { direction: ltr; }
+      .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+      .hero-right { order: -1; }
       .hero h1 { font-size: 2.3rem; }
       .hero p { font-size: 1rem; }
       .hero-btns { flex-direction: column; align-items: flex-start; }
@@ -1810,9 +1810,24 @@
     const popupWatch = document.getElementById('popupWatch');
 
     const isMobile = window.innerWidth <= 768;
-    let gateActive = !isMobile;
+    let gateActive = true;
 
-    if (!isMobile) document.body.style.overflow = 'hidden';
+    if (!isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Mobile: allow scrolling but only until skip button is visible
+      skipBtn.style.display = 'block';
+      let maxScrollY = 0;
+      function calcMax() {
+        maxScrollY = Math.max(0, skipBtn.offsetTop + skipBtn.offsetHeight - window.innerHeight + 24);
+      }
+      setTimeout(calcMax, 300);
+      window.addEventListener('resize', calcMax);
+      window.addEventListener('scroll', function() {
+        if (!gateActive) return;
+        if (window.scrollY > maxScrollY) window.scrollTo(0, maxScrollY);
+      }, { passive: true });
+    }
 
     function unlock() {
       gateActive = false;
@@ -1866,8 +1881,6 @@
     // Skip button
     skipBtn.addEventListener('click', unlock);
 
-    // On mobile: hide skip button, gate already disabled
-    if (isMobile) skipBtn.style.display = 'none';
   })();
 
   // AUDIO PLAYER + TRANSCRIPT
