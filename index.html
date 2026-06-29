@@ -839,9 +839,154 @@
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; }
     }
+
+    /* VIDEO GATE */
+    .vgate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(8,8,16,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .5s ease;
+    }
+    .vgate.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .vgate-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      max-width: 800px;
+      padding: 0 32px;
+    }
+    .vgate-video-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 100px rgba(0,0,0,0.7);
+      background: #000;
+    }
+    .vgate-video-wrap video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .vgate-play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: rgba(0,0,0,0.45);
+      transition: opacity .3s;
+    }
+    .vgate-play-overlay.gone { opacity: 0; pointer-events: none; }
+    .vgate-play-btn {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      border: none;
+      background: var(--teal);
+      color: #0C0C14;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 6px;
+      transition: transform .2s, opacity .2s;
+    }
+    .vgate-play-btn:hover { transform: scale(1.08); }
+    .vgate-hint {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .vgate-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+    .vgate-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .vgate-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      border-radius: 4px;
+      transition: width .25s linear;
+    }
+    .vgate-skip {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 9px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color .2s, border-color .2s;
+    }
+    .vgate-skip:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* THUMBNAIL PLAY BUTTON in hero */
+    .hero-video-thumb { position: relative; cursor: pointer; }
+    .thumb-play-btn {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.35);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: background .2s;
+      border-radius: 16px;
+    }
+    .thumb-play-btn:hover { background: rgba(0,0,0,0.5); }
+    .thumb-play-btn svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
   </style>
 </head>
 <body>
+
+<!-- VIDEO GATE OVERLAY -->
+<div id="videoGate" class="vgate">
+  <div class="vgate-inner">
+    <div class="vgate-video-wrap">
+      <video id="gateVideo" playsinline preload="auto">
+        <source src="ElevenLabs_video_creatify-aurora_Gestik Szene fü_2026-06-29T15_37_08.mp4" type="video/mp4">
+      </video>
+      <div class="vgate-play-overlay" id="gatePlayOverlay">
+        <button class="vgate-play-btn" id="gatePlayBtn" aria-label="Video mit Ton abspielen">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><polygon points="6,3 20,12 6,21"/></svg>
+        </button>
+        <p class="vgate-hint">Klicken zum Abspielen</p>
+      </div>
+    </div>
+    <div class="vgate-bar-wrap">
+      <div class="vgate-progress"><div class="vgate-fill" id="gateFill"></div></div>
+      <button class="vgate-skip" id="gateSkip">Video überspringen →</button>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -883,12 +1028,15 @@
         </div>
       </div>
 
-      <!-- RIGHT: Video -->
+      <!-- RIGHT: Video (thumbnail only, gate handles playback) -->
       <div class="hero-right">
-        <div class="hero-video-wrap">
-          <video autoplay muted loop playsinline>
+        <div class="hero-video-wrap hero-video-thumb" id="heroThumbWrap">
+          <video id="heroThumb" muted playsinline preload="metadata" style="pointer-events:none;">
             <source src="ElevenLabs_video_creatify-aurora_Gestik Szene fü_2026-06-29T15_37_08.mp4" type="video/mp4">
           </video>
+          <button class="thumb-play-btn" id="openVideoGate" aria-label="Video abspielen">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36"><polygon points="6,3 20,12 6,21"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -1304,6 +1452,53 @@
       }
     });
   }
+
+  // VIDEO GATE
+  (function() {
+    const gate       = document.getElementById('videoGate');
+    const gateVideo  = document.getElementById('gateVideo');
+    const playOverlay= document.getElementById('gatePlayOverlay');
+    const playBtn    = document.getElementById('gatePlayBtn');
+    const skipBtn    = document.getElementById('gateSkip');
+    const fill       = document.getElementById('gateFill');
+    const openBtn    = document.getElementById('openVideoGate');
+
+    // Lock scroll on page load
+    document.body.style.overflow = 'hidden';
+
+    function dismissGate() {
+      gateVideo.pause();
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+      gate.addEventListener('transitionend', () => gate.remove(), { once: true });
+    }
+
+    // Play with sound on button click
+    playBtn.addEventListener('click', () => {
+      gateVideo.play();
+      playOverlay.classList.add('gone');
+    });
+
+    // Update progress bar
+    gateVideo.addEventListener('timeupdate', () => {
+      if (!gateVideo.duration) return;
+      fill.style.width = (gateVideo.currentTime / gateVideo.duration * 100) + '%';
+    });
+
+    // Auto-dismiss when video ends
+    gateVideo.addEventListener('ended', dismissGate);
+
+    // Skip button
+    skipBtn.addEventListener('click', dismissGate);
+
+    // Thumbnail play button in hero also opens gate
+    if (openBtn) {
+      openBtn.addEventListener('click', () => {
+        gate.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+  })();
 
   // Scroll reveal
   const obs = new IntersectionObserver(entries => {
