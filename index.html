@@ -322,9 +322,20 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .voice-player-col {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .voice-controls {
       display: flex;
       align-items: center;
-      gap: 48px;
+      gap: 16px;
     }
     .voice-left {
       display: flex;
@@ -447,8 +458,44 @@
       color: var(--muted);
       font-weight: 500;
     }
+    /* TRANSCRIPT */
+    .voice-transcript {
+      border-left: 1px solid var(--border);
+      padding-left: 40px;
+    }
+    .transcript-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+    .transcript-cues {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tcue {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: rgba(238,237,245,0.2);
+      padding: 10px 0 10px 16px;
+      border-left: 2px solid transparent;
+      transition: color .35s ease, border-color .35s ease;
+      cursor: default;
+    }
+    .tcue.active {
+      color: var(--text);
+      border-left-color: var(--teal);
+    }
+    .tcue.done {
+      color: rgba(238,237,245,0.35);
+    }
+
     @media (max-width: 768px) {
-      .voice-card { flex-direction: column; align-items: flex-start; gap: 28px; padding: 28px 24px; }
+      .voice-card { grid-template-columns: 1fr; gap: 32px; padding: 28px 24px; }
+      .voice-transcript { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 28px; }
     }
 
     /* TRUST PILLS */
@@ -1414,42 +1461,60 @@
       <p class="section-sub">Unsere KI spricht fließend Deutsch — ununterscheidbar von einem echten Mitarbeiter.</p>
     </div>
     <div class="voice-card reveal">
-      <div class="voice-left">
-        <div class="voice-avatar">
-          <div class="voice-bars" id="voiceBars">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
+
+      <!-- LEFT: Player -->
+      <div class="voice-player-col">
+        <div class="voice-left">
+          <div class="voice-avatar">
+            <div class="voice-bars" id="voiceBars">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="voice-info">
+            <div class="voice-name">Kira · Zentime KI</div>
+            <div class="voice-role">Ihr KI-Telefonassistent</div>
           </div>
         </div>
-        <div class="voice-info">
-          <div class="voice-name">Laura · Zentime KI</div>
-          <div class="voice-role">Ihr KI-Telefonassistent</div>
-        </div>
-      </div>
-      <div class="voice-player">
         <audio id="heroAudio" preload="metadata">
           <source src="ElevenLabs_2026-06-29T17_17_42_Laura - Upbeat &amp; Energetic _pvc_sp115_s73_sb32_se45_b_m2.mp3" type="audio/mpeg">
         </audio>
-        <button class="voice-play-btn" id="audioPlayBtn" aria-label="Abspielen">
-          <svg id="audioIcon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><polygon points="6,3 20,12 6,21"/></svg>
-        </button>
-        <div class="voice-track">
-          <div class="voice-waveform" id="audioProgressBar">
-            <div class="voice-waveform-fill" id="audioFill"></div>
-            <div class="voice-waveform-bars">
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <div class="voice-controls">
+          <button class="voice-play-btn" id="audioPlayBtn" aria-label="Abspielen">
+            <svg id="audioIcon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><polygon points="6,3 20,12 6,21"/></svg>
+          </button>
+          <div class="voice-track">
+            <div class="voice-waveform" id="audioProgressBar">
+              <div class="voice-waveform-fill" id="audioFill"></div>
+              <div class="voice-waveform-bars">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
             </div>
-          </div>
-          <div class="voice-times">
-            <span id="audioCurrent">0:00</span>
-            <span id="audioDuration">–:––</span>
+            <div class="voice-times">
+              <span id="audioCurrent">0:00</span>
+              <span id="audioDuration">–:––</span>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- RIGHT: Live Transcript -->
+      <div class="voice-transcript" id="voiceTranscript">
+        <div class="transcript-label">● Live Transkript</div>
+        <div class="transcript-cues" id="transcriptCues">
+          <div class="tcue" data-index="0">Hallo, ich bin Kira — dein KI-Telefonassistent von ZenTime.</div>
+          <div class="tcue" data-index="1">Ab morgen nehme ich jeden Anruf für dich entgegen. Egal zu welcher Uhrzeit, egal welche Sprache dein Kunde spricht.</div>
+          <div class="tcue" data-index="2">In Restaurants buche, ändere und storniere ich Tischreservierungen, beantworte Fragen und nehme Essensbestellungen direkt entgegen.</div>
+          <div class="tcue" data-index="3">In Salons, Kosmetikstudios und vielen weiteren Branchen verwalte ich Termine, Mitarbeiter und Services — und leite Anrufe bei Bedarf direkt an dich weiter.</div>
+          <div class="tcue" data-index="4">Ich arbeite Tag und Nacht für dich. Kein Urlaub, keine Pause, kein Krankenstand.</div>
+          <div class="tcue" data-index="5">Und das zu einem Bruchteil der Kosten eines echten Mitarbeiters.</div>
+          <div class="tcue" data-index="6">Wenn du sehen möchtest wie ich für dein Business klingen würde — trag dich einfach unten für eine kostenlose Demo ein. Ich freue mich auf dich.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1705,7 +1770,7 @@
     skipBtn.addEventListener('click', unlock);
   })();
 
-  // AUDIO PLAYER
+  // AUDIO PLAYER + TRANSCRIPT
   (function() {
     const audio    = document.getElementById('heroAudio');
     const playBtn  = document.getElementById('audioPlayBtn');
@@ -1713,8 +1778,20 @@
     const fill     = document.getElementById('audioFill');
     const bar      = document.getElementById('audioProgressBar');
     const current  = document.getElementById('audioCurrent');
-    const duration = document.getElementById('audioDuration');
+    const durEl    = document.getElementById('audioDuration');
     const vBars    = document.getElementById('voiceBars');
+    const cueEls   = document.querySelectorAll('.tcue');
+
+    // Estimated timestamps (start in seconds)
+    const cues = [
+      { start: 0,    end: 5.5  },  // Hallo, ich bin Kira…
+      { start: 5.5,  end: 13.5 },  // Ab morgen nehme ich…
+      { start: 13.5, end: 21.0 },  // In Restaurants…
+      { start: 21.0, end: 31.0 },  // In Salons, Kosmetikstudios…
+      { start: 31.0, end: 37.5 },  // Ich arbeite Tag und Nacht…
+      { start: 37.5, end: 43.0 },  // Und das zu einem Bruchteil…
+      { start: 43.0, end: 57.0 },  // Wenn du sehen möchtest…
+    ];
 
     const playIcon  = '<polygon points="6,3 20,12 6,21"/>';
     const pauseIcon = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
@@ -1730,20 +1807,32 @@
       vBars.classList.toggle('playing', playing);
     }
 
+    function updateCues(t) {
+      cueEls.forEach((el, i) => {
+        const c = cues[i];
+        el.classList.remove('active', 'done');
+        if (t >= c.start && t < c.end) el.classList.add('active');
+        else if (t >= c.end)           el.classList.add('done');
+      });
+    }
+
     audio.addEventListener('loadedmetadata', () => {
-      duration.textContent = fmt(audio.duration);
+      durEl.textContent = fmt(audio.duration);
     });
 
     audio.addEventListener('timeupdate', () => {
       if (!audio.duration) return;
-      fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-      current.textContent = fmt(audio.currentTime);
+      const t = audio.currentTime;
+      fill.style.width = (t / audio.duration * 100) + '%';
+      current.textContent = fmt(t);
+      updateCues(t);
     });
 
     audio.addEventListener('ended', () => {
       setPlaying(false);
       fill.style.width = '0%';
       current.textContent = '0:00';
+      cueEls.forEach(el => { el.classList.remove('active'); el.classList.add('done'); });
     });
 
     playBtn.addEventListener('click', () => {
