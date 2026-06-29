@@ -633,6 +633,66 @@
     .price-btn.g:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
 
     /* CALLBACK FORM */
+    /* VIDEO GATE POPUP */
+    .gate-popup-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .gate-popup {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 40px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .gate-popup-msg {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.55;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+    .gate-popup-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .gate-popup-skip {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color .2s, border-color .2s;
+    }
+    .gate-popup-skip:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+    .gate-popup-watch {
+      background: var(--teal);
+      color: #0C0C14;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s;
+    }
+    .gate-popup-watch:hover { opacity: 0.88; }
+
     /* CTA */
     .cta-section {
       text-align: center;
@@ -1160,40 +1220,71 @@
   </div>
 </footer>
 
+<!-- VIDEO GATE POPUP -->
+<div id="gatePopup" class="gate-popup-bg" style="display:none;">
+  <div class="gate-popup">
+    <p class="gate-popup-msg">Bitte schau dir zuerst das Video zu Ende an — oder überspringe es.</p>
+    <div class="gate-popup-btns">
+      <button id="popupSkip" class="gate-popup-skip">Überspringen</button>
+      <button id="popupWatch" class="gate-popup-watch">Zum Video</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // HERO VIDEO SCROLL GATE
   (function() {
-    const video   = document.getElementById('heroVideo');
-    const overlay = document.getElementById('hvOverlay');
-    const playBtn = document.getElementById('hvPlayBtn');
-    const fill    = document.getElementById('hvFill');
-    const skipBtn = document.getElementById('hvSkip');
+    const video      = document.getElementById('heroVideo');
+    const overlay    = document.getElementById('hvOverlay');
+    const playBtn    = document.getElementById('hvPlayBtn');
+    const fill       = document.getElementById('hvFill');
+    const skipBtn    = document.getElementById('hvSkip');
+    const popup      = document.getElementById('gatePopup');
+    const popupSkip  = document.getElementById('popupSkip');
+    const popupWatch = document.getElementById('popupWatch');
 
-    // Lock scrolling until video ends or skipped
+    let gateActive = true;
+
     document.body.style.overflow = 'hidden';
 
     function unlock() {
+      gateActive = false;
       document.body.style.overflow = '';
       skipBtn.style.display = 'none';
+      popup.style.display = 'none';
     }
 
-    // Play/pause toggle via overlay click
-    overlay.addEventListener('click', () => {
-      if (video.paused) {
-        video.play();
-        overlay.classList.add('hidden');
-      }
+    function showPopup() {
+      popup.style.display = 'flex';
+    }
+
+    // Intercept the two hero buttons
+    document.querySelectorAll('.hero-btns a').forEach(btn => {
+      btn.addEventListener('click', e => {
+        if (gateActive) { e.preventDefault(); showPopup(); }
+      });
     });
 
-    // Click on video itself to pause and show overlay again
+    // Popup: Überspringen
+    popupSkip.addEventListener('click', () => { unlock(); });
+
+    // Popup: Zum Video — close popup, scroll to video
+    popupWatch.addEventListener('click', () => {
+      popup.style.display = 'none';
+      document.getElementById('heroVideo').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // Close popup when clicking backdrop
+    popup.addEventListener('click', e => { if (e.target === popup) popup.style.display = 'none'; });
+
+    // Play/pause toggle
+    overlay.addEventListener('click', () => {
+      if (video.paused) { video.play(); overlay.classList.add('hidden'); }
+    });
+
     video.style.pointerEvents = 'auto';
     video.addEventListener('click', () => {
-      if (!video.paused) {
-        video.pause();
-        overlay.classList.remove('hidden');
-        // Change overlay to show "pause" state
-        playBtn.querySelector('svg polygon').setAttribute('points', '6,3 20,12 6,21');
-      }
+      if (!video.paused) { video.pause(); overlay.classList.remove('hidden'); }
     });
 
     // Progress bar
@@ -1202,13 +1293,10 @@
       fill.style.width = (video.currentTime / video.duration * 100) + '%';
     });
 
-    // Video ended → unlock scroll
-    video.addEventListener('ended', () => {
-      unlock();
-      overlay.classList.remove('hidden');
-    });
+    // Video ended → unlock
+    video.addEventListener('ended', () => { unlock(); overlay.classList.remove('hidden'); });
 
-    // Skip button → unlock scroll immediately
+    // Skip button
     skipBtn.addEventListener('click', unlock);
   })();
 
