@@ -106,9 +106,39 @@
 
     /* HERO */
     .hero {
-      padding: 200px 0 120px;
-      text-align: center;
+      padding: 140px 0 100px;
       position: relative;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-left {
+      text-align: left;
+    }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video-wrap {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+
+    .hero-video-wrap video {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .hero-badge {
@@ -138,28 +168,28 @@
     }
 
     .hero h1 {
-      font-size: 5.5rem;
+      font-size: 4rem;
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -0.04em;
-      max-width: 900px;
-      margin: 0 auto 28px;
+      max-width: 600px;
+      margin: 0 0 28px;
       color: var(--text);
     }
     .hero h1 .hl { color: var(--teal); }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--muted);
-      max-width: 580px;
-      margin: 0 auto 48px;
+      max-width: 480px;
+      margin: 0 0 40px;
       line-height: 1.75;
     }
 
     .hero-btns {
       display: flex;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
       flex-wrap: wrap;
     }
 
@@ -284,7 +314,7 @@
     /* TRUST PILLS */
     .trust-row {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 28px;
@@ -794,7 +824,9 @@
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     }
     @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero h1 { font-size: 2.6rem; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
       .how-grid { grid-template-columns: 1fr; }
       .chat-box { display: none; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -806,7 +838,6 @@
       .price-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; }
-      .hero-btns { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -827,42 +858,39 @@
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge"><span></span>KI-Telefonassistent · Nächste Generation</div>
+    <div class="hero-inner">
+      <!-- LEFT: Text -->
+      <div class="hero-left">
+        <div class="hero-badge"><span></span>KI-Telefonassistent · Nächste Generation</div>
 
-    <h1>
-      Kein Anruf bleibt<br>
-      <span class="hl">unbeantwortet.</span>
-    </h1>
+        <h1>
+          Kein Anruf bleibt<br>
+          <span class="hl">unbeantwortet.</span>
+        </h1>
 
-    <p>Das KI-Betriebssystem für automatisiertes Terminmanagement – Inbound & Outbound, 24/7, auf Deutsch.</p>
+        <p>Das KI-Betriebssystem für automatisiertes Terminmanagement – Inbound & Outbound, 24/7, auf Deutsch.</p>
 
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary">Kostenlos testen</a>
-      <a href="#how" class="btn-outline">Wie es funktioniert →</a>
-    </div>
-
-    <div class="hero-card">
-      <div class="hcard-top">
-        <div class="hcard-icon">📞</div>
-        <div>
-          <div class="hcard-caller">Anna K. · Friseursalon Bella</div>
-          <div class="hcard-status">ZenTime KI nimmt Anruf an</div>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-primary">Kostenlos testen</a>
+          <a href="#how" class="btn-outline">Wie es funktioniert →</a>
         </div>
-        <div class="wave">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+
+        <div class="trust-row">
+          <div class="trust-pill"><b>98%</b> Erfolgsrate</div>
+          <div class="trust-pill"><b>24/7</b> Erreichbar</div>
+          <div class="trust-pill"><b>&lt;2 Sek.</b> Antwortzeit</div>
+          <div class="trust-pill"><b>DSGVO</b> Deutsche Server</div>
         </div>
       </div>
-      <div class="hcard-msg">
-        <strong>ZenTime:</strong> „Guten Tag! Sie sprechen mit dem KI-Assistenten von Salon Bella. Möchten Sie einen Termin buchen?"
-      </div>
-      <div class="hcard-note">✓ Termin gebucht · SMS-Bestätigung versendet · Kalender aktualisiert</div>
-    </div>
 
-    <div class="trust-row">
-      <div class="trust-pill"><b>98%</b> Erfolgsrate</div>
-      <div class="trust-pill"><b>24/7</b> Erreichbar</div>
-      <div class="trust-pill"><b>&lt;2 Sek.</b> Antwortzeit</div>
-      <div class="trust-pill"><b>DSGVO</b> Deutsche Server</div>
+      <!-- RIGHT: Video -->
+      <div class="hero-right">
+        <div class="hero-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="ElevenLabs_video_creatify-aurora_Gestik Szene fü_2026-06-29T15_37_08.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
     </div>
   </div>
 </section>
