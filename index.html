@@ -130,6 +130,7 @@
 
     .hero-video-wrap {
       width: 100%;
+      aspect-ratio: 832 / 1088;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
@@ -138,7 +139,8 @@
 
     .hero-video-wrap video {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
 
@@ -843,7 +845,6 @@
 
     /* HERO VIDEO IN-PLACE */
     .hero-video-wrap { position: relative; background: #000; }
-    .hero-video-wrap video { width: 100%; height: auto; display: block; }
 
     .hv-overlay {
       position: absolute;
