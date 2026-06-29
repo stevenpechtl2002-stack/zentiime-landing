@@ -509,10 +509,24 @@
     /* USECASES */
     .use-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-top: 48px;
     }
+    .use-card-all {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(0,212,177,0.08), rgba(108,99,255,0.08));
+      border: 1px solid rgba(0,212,177,0.25);
+      border-radius: 14px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 4px;
+    }
+    .use-card-all .ico { font-size: 2rem; flex-shrink: 0; }
+    .use-card-all h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; color: var(--teal); }
+    .use-card-all p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin: 0; }
     .use-card {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -748,6 +762,7 @@
       .container { padding: 0 32px; }
       .nav-links { display: none; }
       .features-grid { grid-template-columns: 1fr 1fr; }
+      .use-grid { grid-template-columns: 1fr 1fr; }
       .testi-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     }
@@ -1036,35 +1051,77 @@
   <div class="container">
     <div class="reveal">
       <div class="section-tag">Branchen</div>
-      <h2 class="section-title">Perfekt für Betriebe,<br>die Termine vergeben.</h2>
+      <h2 class="section-title">Zentime funktioniert für<br>jede Branche.</h2>
     </div>
     <div class="use-grid">
       <div class="use-card reveal">
         <div class="ico">💇</div>
         <div>
           <h3>Friseure & Kosmetik</h3>
-          <p>Terminbuchungen rund um die Uhr – der KI-Assistent füllt Ihren Kalender automatisch, auch nachts.</p>
+          <p>Terminbuchungen rund um die Uhr – der KI-Assistent füllt Ihren Kalender automatisch.</p>
         </div>
       </div>
       <div class="use-card reveal">
         <div class="ico">🦷</div>
         <div>
           <h3>Zahnärzte & Praxen</h3>
-          <p>Patienten anrufen lassen, Termine buchen und Erinnerungen automatisch versenden – ohne Rezeption.</p>
+          <p>Termine buchen und Erinnerungen automatisch versenden – ohne Rezeption.</p>
         </div>
       </div>
       <div class="use-card reveal">
         <div class="ico">💆</div>
         <div>
           <h3>Physiotherapie & Wellness</h3>
-          <p>Auslastung maximieren: Die KI füllt freie Slots automatisch und sendet Terminerinnerungen per SMS.</p>
+          <p>Auslastung maximieren: Die KI füllt freie Slots und sendet Terminerinnerungen per SMS.</p>
         </div>
       </div>
       <div class="use-card reveal">
         <div class="ico">💅</div>
         <div>
           <h3>Nagelstudios & Beauty</h3>
-          <p>Kein Anruf mehr verpassen. ZenTime AI nimmt jeden Anruf an und bucht den Termin sofort ein.</p>
+          <p>Kein Anruf mehr verpassen. Zentime AI nimmt jeden Anruf an und bucht sofort ein.</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ico">🏋️</div>
+        <div>
+          <h3>Fitnessstudios & Sport</h3>
+          <p>Kursbuchungen, Probetraining und Mitgliedsanfragen automatisch verwalten.</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ico">🏥</div>
+        <div>
+          <h3>Ärzte & Therapeuten</h3>
+          <p>Patientenanrufe automatisch annehmen, Termine koordinieren, Wartelisten pflegen.</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ico">🔧</div>
+        <div>
+          <h3>Handwerk & Dienstleistung</h3>
+          <p>Anfragen sofort qualifizieren und Termine direkt buchen – keine verpassten Aufträge mehr.</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ico">🏡</div>
+        <div>
+          <h3>Immobilien & Beratung</h3>
+          <p>Besichtigungstermine und Erstgespräche automatisch koordinieren – rund um die Uhr.</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ico">🐾</div>
+        <div>
+          <h3>Tierärzte & Tierpflege</h3>
+          <p>Terminanfragen automatisch entgegennehmen und Erinnerungen vor jedem Besuch senden.</p>
+        </div>
+      </div>
+      <div class="use-card-all reveal">
+        <div class="ico">✨</div>
+        <div>
+          <h3>Ihr Betrieb ist dabei</h3>
+          <p>Zentime lässt sich für jede Branche konfigurieren – egal ob Einzelunternehmer oder Kette. Wenn Ihr Betrieb Termine vergibt oder Anrufe entgegennimmt, übernimmt Zentime AI das für Sie.</p>
         </div>
       </div>
     </div>
