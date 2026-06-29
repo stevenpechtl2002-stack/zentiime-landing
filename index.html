@@ -1984,13 +1984,48 @@
     });
   })();
 
-  // CALENDLY MOBILE HEIGHT
+  // CALENDLY MOBILE HEIGHT + SCROLL FIX
   (function() {
     const w = document.getElementById('calendlyWidget');
     if (!w) return;
+
     function setH() { w.style.height = window.innerWidth <= 768 ? '700px' : '1000px'; }
     setH();
     window.addEventListener('resize', setH);
+
+    // On mobile: overlay prevents iframe from hijacking scroll
+    if (window.innerWidth > 768) return;
+
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;';
+    w.parentNode.insertBefore(wrap, w);
+    wrap.appendChild(w);
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:absolute;inset:0;z-index:2;';
+    wrap.appendChild(overlay);
+
+    let lastY = 0, moved = false;
+
+    overlay.addEventListener('touchstart', e => {
+      lastY = e.touches[0].clientY;
+      moved = false;
+    }, { passive: true });
+
+    overlay.addEventListener('touchmove', e => {
+      const dy = lastY - e.touches[0].clientY;
+      lastY = e.touches[0].clientY;
+      moved = true;
+      window.scrollBy(0, dy);
+    }, { passive: true });
+
+    overlay.addEventListener('touchend', () => {
+      if (!moved) {
+        // Tap: hide overlay briefly so click reaches iframe
+        overlay.style.display = 'none';
+        setTimeout(() => { overlay.style.display = ''; }, 500);
+      }
+    });
   })();
 
   // Count up
