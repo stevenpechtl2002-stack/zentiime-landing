@@ -2002,23 +2002,20 @@
     wrap.appendChild(w);
 
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:absolute;inset:0;z-index:2;';
+    // touch-action: pan-y lets the browser handle scroll natively (smooth + momentum)
+    overlay.style.cssText = 'position:absolute;inset:0;z-index:2;touch-action:pan-y;';
     wrap.appendChild(overlay);
 
-    let startY = 0, startScrollY = 0, moved = false;
+    let startY = 0, moved = false;
 
     overlay.addEventListener('touchstart', e => {
       startY = e.touches[0].clientY;
-      startScrollY = window.pageYOffset;
       moved = false;
     }, { passive: true });
 
     overlay.addEventListener('touchmove', e => {
-      e.preventDefault();
-      const dy = startY - e.touches[0].clientY;
-      if (Math.abs(dy) > 3) moved = true;
-      window.scrollTo(0, startScrollY + dy);
-    }, { passive: false });
+      if (Math.abs(e.touches[0].clientY - startY) > 5) moved = true;
+    }, { passive: true });
 
     overlay.addEventListener('touchend', () => {
       if (!moved) {
