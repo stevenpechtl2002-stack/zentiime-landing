@@ -664,6 +664,82 @@
     .price-btn.g { border: 1px solid var(--border); color: var(--text); }
     .price-btn.g:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
 
+    /* SETUP BOX */
+    .setup-box {
+      margin-top: 48px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,177,0.06));
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .setup-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 10px;
+    }
+    .setup-price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .setup-price sup { font-size: 1.1rem; vertical-align: top; margin-top: 10px; display: inline-block; }
+    .setup-price span { font-size: 0.9rem; font-weight: 500; color: var(--muted); margin-left: 8px; letter-spacing: 0; }
+    .setup-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+    .setup-feats {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .setup-feats li {
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .setup-feats li::before {
+      content: '✓';
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(108,99,255,0.15);
+      color: var(--purple);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .abo-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      margin: 32px 0 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .price-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .setup-box { grid-template-columns: 1fr; gap: 24px; padding: 28px 24px; }
+    }
+
     /* CALLBACK FORM */
     /* VIDEO GATE POPUP */
     .gate-popup-bg {
@@ -1191,54 +1267,74 @@
   <div class="container">
     <div class="reveal">
       <div class="section-tag">Preise</div>
-      <h2 class="section-title">Transparent. Skalierbar.<br>Kein Vertrag nötig.</h2>
-      <p class="section-sub">Starten Sie kostenlos und wachsen Sie nach Bedarf.</p>
+      <h2 class="section-title">Einmalige Einrichtung.<br>Flexibles Abo nach Anrufvolumen.</h2>
+      <p class="section-sub">Einmalige Setup-Zahlung – danach nur das Abo, das zu Ihrem Betrieb passt.</p>
     </div>
+
+    <!-- SETUP BOX -->
+    <div class="setup-box reveal">
+      <div class="setup-left">
+        <div class="setup-label">Einmalige Einrichtungsgebühr</div>
+        <div class="setup-price"><sup>€</sup>3.000<span>zzgl. MwSt.</span></div>
+        <p class="setup-desc">Individuelles KI-Training, Integration in Ihren Kalender, Einrichtung aller Systeme & persönliches Onboarding.</p>
+      </div>
+      <ul class="setup-feats">
+        <li>Persönliches Onboarding</li>
+        <li>KI auf Ihre Branche trainiert</li>
+        <li>Kalender & CRM Integration</li>
+        <li>Test & Abnahme inklusive</li>
+      </ul>
+    </div>
+
+    <!-- ABO CARDS -->
+    <div class="abo-label reveal">Monatliches Abo — abhängig von Ihrem Anrufvolumen</div>
     <div class="price-grid">
       <div class="price-card reveal">
         <div class="price-plan">Starter</div>
-        <div class="price-num"><sup>€</sup>0<sub>/Monat</sub></div>
-        <div class="price-desc">Perfekt zum Testen. Keine Kreditkarte.</div>
+        <div class="price-num"><sup>€</sup>100<sub>/Monat</sub></div>
+        <div class="price-desc">Ideal für kleine Betriebe mit wenigen Anrufen.</div>
         <div class="price-divider"></div>
         <ul class="price-feats">
-          <li>100 Anrufe / Monat</li>
-          <li>1 Telefonnummer</li>
-          <li>Terminbuchung</li>
-          <li>E-Mail Zusammenfassungen</li>
+          <li>Bis 200 Anrufe / Monat</li>
+          <li>1 KI-Assistent</li>
+          <li>Terminbuchung & Kalender</li>
+          <li>SMS & E-Mail Bestätigung</li>
+          <li>E-Mail Support</li>
         </ul>
-        <a href="#contact" class="price-btn g">Kostenlos starten</a>
+        <a href="https://www.zentime.io/calender" target="_blank" class="price-btn g">Termin vereinbaren</a>
       </div>
       <div class="price-card pop reveal">
         <div class="pop-tag">Beliebteste Wahl</div>
         <div class="price-plan">Business</div>
-        <div class="price-num"><sup>€</sup>149<sub>/Monat</sub></div>
-        <div class="price-desc">Für wachsende Unternehmen.</div>
+        <div class="price-num"><sup>€</sup>249<sub>/Monat</sub></div>
+        <div class="price-desc">Für Betriebe mit regelmäßig hohem Anrufaufkommen.</div>
         <div class="price-divider"></div>
         <ul class="price-feats">
-          <li>2.000 Anrufe / Monat</li>
-          <li>3 Telefonnummern</li>
+          <li>Bis 800 Anrufe / Monat</li>
+          <li>2 KI-Assistenten</li>
           <li>CRM-Integration</li>
-          <li>Mehrsprachig</li>
           <li>Live-Dashboard</li>
+          <li>Mehrsprachig</li>
           <li>Priority Support</li>
         </ul>
-        <a href="#contact" class="price-btn p">Jetzt starten</a>
+        <a href="https://www.zentime.io/calender" target="_blank" class="price-btn p">Termin vereinbaren</a>
       </div>
       <div class="price-card reveal">
         <div class="price-plan">Enterprise</div>
         <div class="price-num" style="font-size:1.8rem;line-height:1.3;margin:4px 0 6px">Individuell</div>
-        <div class="price-desc">Für große Teams & spezifische Anforderungen.</div>
+        <div class="price-desc">Für Betriebe mit sehr hohem Anrufvolumen oder mehreren Standorten.</div>
         <div class="price-divider"></div>
         <ul class="price-feats">
           <li>Unbegrenzte Anrufe</li>
-          <li>Unbegrenzte Nummern</li>
+          <li>Beliebig viele Assistenten</li>
           <li>Custom KI-Training</li>
-          <li>SLA & Dedicated Support</li>
-          <li>On-Premise Option</li>
+          <li>Dedizierter Account Manager</li>
+          <li>SLA & On-Premise Option</li>
         </ul>
-        <a href="#contact" class="price-btn g">Angebot anfragen</a>
+        <a href="https://www.zentime.io/calender" target="_blank" class="price-btn g">Angebot anfragen</a>
       </div>
     </div>
+    <p class="price-note reveal">Alle Preise zzgl. MwSt. · Das Abo richtet sich nach Ihrem tatsächlichen Anrufvolumen – bei Fragen beraten wir Sie gerne persönlich.</p>
   </div>
 </section>
 
