@@ -114,14 +114,15 @@
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
-      grid-template-areas: "left right" "btns right" "trust right";
-      gap: 32px 48px;
+      grid-template-areas: "badge right" "left right" "btns right" "trust right";
+      gap: 20px 48px;
       align-items: start;
     }
-    .hero-left  { grid-area: left; }
-    .hero-right { grid-area: right; }
-    .hero-btns  { grid-area: btns; }
-    .trust-row  { grid-area: trust; }
+    .hero-left   { grid-area: left; }
+    .hero-right  { grid-area: right; }
+    .hero-btns   { grid-area: btns; }
+    .trust-row   { grid-area: trust; }
+    .hero-badge  { grid-area: badge; align-self: center; }
 
     .hero-left {
       text-align: left;
@@ -1105,7 +1106,7 @@
       .container { padding: 0 16px; }
       .nav-cta { padding: 7px 14px; font-size: 0.8rem; }
       .hero { padding: 96px 0 48px; }
-      .hero-inner { grid-template-columns: 1fr; grid-template-areas: "right" "left" "btns" "trust"; gap: 28px; }
+      .hero-inner { grid-template-columns: 1fr; grid-template-areas: "badge" "right" "left" "btns" "trust"; gap: 24px; }
       .hero-btns { flex-direction: column; }
       .hero-btns a { width: 100%; text-align: center; }
       .hero h1 { font-size: 2.3rem; }
@@ -1298,10 +1299,11 @@
 <section class="hero">
   <div class="container">
     <div class="hero-inner">
+      <!-- BADGE -->
+      <div class="hero-badge"><span></span>KI-Telefonassistent · Nächste Generation</div>
+
       <!-- LEFT: Text -->
       <div class="hero-left">
-        <div class="hero-badge"><span></span>KI-Telefonassistent · Nächste Generation</div>
-
         <h1>
           Kein Anruf bleibt<br>
           <span class="hl">unbeantwortet.</span>
