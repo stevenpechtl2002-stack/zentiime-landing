@@ -1105,7 +1105,7 @@
       nav { padding: 0 16px; }
       .container { padding: 0 16px; }
       .nav-cta { padding: 7px 14px; font-size: 0.8rem; }
-      .hero { padding: 96px 0 48px; }
+      .hero { padding: 72px 0 24px; min-height: 100dvh; display: flex; align-items: center; }
       .hero-inner { grid-template-columns: 1fr; grid-template-areas: "badge" "right" "left" "btns" "trust"; gap: 24px; }
       .hero-btns { flex-direction: column; }
       .hero-btns a { width: 100%; text-align: center; }
@@ -1806,36 +1806,17 @@
     const isMobile = window.innerWidth <= 768;
     let gateActive = true;
 
+    // Elements only shown after gate unlocks on mobile
+    const gateHiddenEls = isMobile
+      ? document.querySelectorAll('.hero-left, .hero-btns, .trust-row')
+      : null;
+
     if (!isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
-      // Mobile: block scrolling past skip button via touchmove preventDefault
       skipBtn.style.display = 'block';
-      let lastTouchY = 0;
-
-      document.addEventListener('touchstart', e => {
-        lastTouchY = e.touches[0].clientY;
-      }, { passive: true });
-
-      document.addEventListener('touchmove', e => {
-        if (!gateActive) return;
-        const currentY = e.touches[0].clientY;
-        const scrollingDown = currentY < lastTouchY;
-        lastTouchY = currentY;
-        if (scrollingDown) {
-          const skipBottom = skipBtn.getBoundingClientRect().bottom;
-          if (skipBottom <= window.innerHeight + 10) {
-            e.preventDefault();
-          }
-        }
-      }, { passive: false });
-
-      // Snap back for momentum overshoot
-      window.addEventListener('scroll', () => {
-        if (!gateActive) return;
-        const maxY = Math.max(0, skipBtn.offsetTop + skipBtn.offsetHeight - window.innerHeight + 20);
-        if (window.scrollY > maxY) window.scrollTo(0, maxY);
-      });
+      document.body.style.overflow = 'hidden';
+      gateHiddenEls.forEach(el => el.style.display = 'none');
     }
 
     function unlock() {
@@ -1843,6 +1824,9 @@
       document.body.style.overflow = '';
       skipBtn.style.display = 'none';
       popup.style.display = 'none';
+      if (isMobile && gateHiddenEls) {
+        gateHiddenEls.forEach(el => el.style.display = '');
+      }
     }
 
     function showPopup() {
