@@ -1807,18 +1807,33 @@
     if (!isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
-      // Mobile: allow scrolling but only until skip button is visible
+      // Mobile: block scrolling past skip button via touchmove preventDefault
       skipBtn.style.display = 'block';
-      let maxScrollY = 0;
-      function calcMax() {
-        maxScrollY = Math.max(0, skipBtn.offsetTop + skipBtn.offsetHeight - window.innerHeight + 24);
-      }
-      setTimeout(calcMax, 300);
-      window.addEventListener('resize', calcMax);
-      window.addEventListener('scroll', function() {
-        if (!gateActive) return;
-        if (window.scrollY > maxScrollY) window.scrollTo(0, maxScrollY);
+      let lastTouchY = 0;
+
+      document.addEventListener('touchstart', e => {
+        lastTouchY = e.touches[0].clientY;
       }, { passive: true });
+
+      document.addEventListener('touchmove', e => {
+        if (!gateActive) return;
+        const currentY = e.touches[0].clientY;
+        const scrollingDown = currentY < lastTouchY;
+        lastTouchY = currentY;
+        if (scrollingDown) {
+          const skipBottom = skipBtn.getBoundingClientRect().bottom;
+          if (skipBottom <= window.innerHeight + 10) {
+            e.preventDefault();
+          }
+        }
+      }, { passive: false });
+
+      // Snap back for momentum overshoot
+      window.addEventListener('scroll', () => {
+        if (!gateActive) return;
+        const maxY = Math.max(0, skipBtn.offsetTop + skipBtn.offsetHeight - window.innerHeight + 20);
+        if (window.scrollY > maxY) window.scrollTo(0, maxY);
+      });
     }
 
     function unlock() {
